@@ -1,0 +1,39 @@
+plugins:
+  - serverless-api-gateway-throttling
+service: IdeaBoxBot
+
+frameworkVersion: '2'
+variablesResolutionMode: 20210326
+provider:
+  name: aws
+  runtime: nodejs12.x
+  lambdaHashingVersion: '20201221'
+  memorySize: 128
+  environment:
+    PODIO_APP_ID: ${ssm:PODIO_APP_ID}
+    PODIO_APP_TOKEN: ${ssm:PODIO_APP_TOKEN}
+    PODIO_CLIENT_ID: ${ssm:PODIO_CLIENT_ID}
+    PODIO_CLIENT_SECRET: ${ssm:PODIO_CLIENT_SECRET}
+    SLACK_SIGNING_SECRET: ${ssm:SLACK_SIGNING_SECRET}
+    SLACK_VERIFICATION_TOKEN: ${ssm:SLACK_VERIFICATION_TOKEN}
+    SLACK_API_TOKEN: ${ssm:SLACK_API_TOKEN}
+
+functions:
+  command:
+    handler: command.run
+    events:
+      - http:
+          path: "/events"
+          method: post
+          throttling:
+            maxRequestsPerSecond: 2
+            maxConcurrentRequests: 2
+  interactive:
+    handler: interactive.run
+    events:
+      - http:
+          path: "/interactive"
+          method: post
+          throttling:
+            maxRequestsPerSecond: 2
+            maxConcurrentRequests: 2

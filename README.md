@@ -1,5 +1,5 @@
 <!--
-title: 'AWS Simple HTTP Endpoint example in NodeJS'
+title: 'Serverless Slack bot for Podio integration using NodeJS, AWS API Gateway and Lambda'
 description: 'This template demonstrates how to make a simple REST API with Node.js running on AWS Lambda and API Gateway using the traditional Serverless Framework.'
 layout: Doc
 framework: v2
